@@ -1,0 +1,13 @@
+# Ignore all log files and folders in this directory
+*.log
+*.log.*
+*.out
+*.err
+*.txt
+*.jsonl
+
+# Ignore everything in this logs directory
+*
+
+# But do not ignore this .gitignore file itself
+!.gitignore
