@@ -1,29 +1,30 @@
+from dotenv import load_dotenv
 from labloom.logger import logger
+import os
+
+load_dotenv()
+
 
 
 def cli():
+    """Run in CLI mode."""
     logger.info("Running CLI mode.")
-    print("Welcome to labloom CLI!")
-    # Add CLI logic here
-    from .examples.E08_drafter import run as processor_run
-
+    print("Welcome to labloom CLI (New)!")
+    from .examples.langgraph.E08_drafter import run as processor_run
     processor_run()
 
-
 def gui():
+    """Run in GUI mode."""
     logger.info("Running GUI mode.")
     print("Welcome to labloom GUI!")
-    # Add GUI logic here
 
+    try:
+        from streamlit.web.bootstrap import run
+        from . import streamlit_app as app  # must be in the same directory or PYTHONPATH
 
-def main():
-    logger.info("Hello from tool-ai-lab-generation-iiith!")
-    logger.debug("This is a debug message.")
-    logger.error("This is an error message.")
-    logger.warning("This is a warning message.")
-    logger.critical("This is a critical message.")
-    print("Hello from tool-ai-lab-generation-iiith!")
-
-
-if __name__ == "__main__":
-    main()
+        run(app.__file__, False, [], {
+            "server.enableStaticServing": True,
+        })
+    except Exception as e:
+        logger.error(f"Failed to launch GUI: {e}")
+        print("Error: Could not start GUI.")
